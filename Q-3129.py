@@ -38,7 +38,6 @@ lista = Lis()
 lista.ini()
 
 
-
 for i in range(n):
     f = int(input())
     lista.li(f)

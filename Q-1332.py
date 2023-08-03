@@ -1,23 +1,17 @@
-import Levenshtein
 
-o = "one"
-t = "two"
 th = 5
-lim = 1
 
 a = int(input())
 
 for i in range(0,a):
-    pa = input()
+    pa = list(input())
     if len(pa) == th:
         print(3)
     else:
-        dist1 = Levenshtein.distance(o,pa)
-        dist2 = Levenshtein.distance(t,pa)
-        if dist1 <= lim:
-           print(1)
-        elif dist2 <= lim:
-           print(2)
+        if (pa[0] == "o" and (pa[1] == "n" or pa[2]== "e")) or (pa[1] == "n" and pa[2] == "e"):
+            print(1)
+        if (pa[0] == "t" and (pa[1] == "w" or pa[2]== "o")) or (pa[1] == "w" and pa[2] == "o"):
+            print(2)
 
 
 

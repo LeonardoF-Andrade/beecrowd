@@ -26,18 +26,20 @@ R = 0
 D = 0
 
 def analisa(lista, data):
-    if lista.next is None:
+    global R, D
+    aux = lista.head
+    if aux.next is None:
         D+=1
     else:
-        if data == lista.head:
-            R+=1
-        else:
-            aux = lista.head
-            while aux.next is not None:
-                if aux.data == data:
-                    R+=1
-                elif aux.next == None:
-                    D+=1
+        aux = lista.head
+        cont = 0
+        while aux is not None:
+            if aux.data == data and aux.next is not None:
+                R+=1
+                cont+=1
+            elif aux.next is None and cont == 0:
+                D+=1
+            aux = aux.next
 
 
 for i in range(n):
@@ -45,4 +47,5 @@ for i in range(n):
     lista.li(f)
     analisa(lista,f)
 
+print(D,"\n",R, sep="")
 

@@ -1,8 +1,0 @@
-vetor = '2*33*2'
-def verificar_elementos(vetor):
-    for elemento in vetor:
-        for char in elemento:
-            if not (char.isdigit() or char in ['*', '+']):
-                return False
-    return True
-print(verificar_elementos(vetor))

@@ -1,18 +1,16 @@
-
-
-
-# Abrir o arquivo no modo de leitura
-with open('entrada.txt', 'r') as arquivo:
-    linhas = arquivo.readlines()
-
-# Remover o caractere de quebra de linha ('\n') de cada linha
+linhas = []
+while True:
+    entrada = input()
+    if entrada == "":
+        break  # Se o usuário pressionar Enter, saia do loop
+    linhas.append(entrada)
 linhas = [linha.strip() for linha in linhas]
 dic = {}
 iter = int(linhas[0])
 linhas = linhas[1:]
 for i in range(int(iter)):
     nome,valor = linhas[i].split()
-    dic[nome] = int(valor)
+    dic[nome] = valor
 linhas = linhas[iter:]
 for linha in linhas:
     if linha == "":
@@ -22,41 +20,36 @@ for linha in linhas:
         dic[coisa] += coisa2 + '*' + valor + ','
     else:
         dic[coisa] = coisa2 + '*' + valor + ','
-
-print(dic)
-
-
+def verificar_elementos(vetor):
+    for elemento in vetor:
+        for char in elemento:
+            if not (char.isdigit() or char in ['*', '+']):
+                return True
+    return False
 def procurar_calcular(vetor,chave):
     if vetor is not None:
-        if (not isinstance(vetor, int))and vetor!='':
-            vetor = vetor.split(',')
-            vetor = vetor[:-1]
-            print(vetor)
-            for x in range(len(vetor)):
-                
-                indice = vetor[x][0]
-                print(indice)
-                if not isinstance(dic[indice],int):
-                    dic[indice] = procurar_calcular(dic[indice],indice)
-                else:
-                    if chave in dic2:
-                        print(chave)
-                        print(dic2[chave])
-                        dic2[chave] += int(dic[indice])*int(vetor[x][2:])
-                    else:
-                        dic2[chave] = int(dic[indice])*int(vetor[x][2:])
-                    dic[chave]=dic2[chave]
-        elif vetor != '':
+        verify = verificar_elementos(vetor)
+        if verify:
+            vetor = vetor.split(',')[:-1]
+            for i in range(len(vetor)):
+                vet = vetor[i]
+                vetor[i] = vet.replace(vet[0],(procurar_calcular((dic[vet[0]]),vet[0])))
+            return "("+'+'.join(vetor)+")"
+        else:
             return vetor
-    
+
+
 def calculate(dic_aux):
     for indice, (chave, valor) in enumerate(dic.items()):
-        print(dic_aux[chave],chave)
-        procurar_calcular(dic_aux[chave],chave)
-        
+        if(indice>=iter):
+            var = procurar_calcular(dic_aux[chave],chave)
+
+            dic_aux[chave] = str(eval(var))
+    return dic_aux
 
 dic2={}
-calculate(dic)
+dic2 = calculate(dic)
 
-for chave, valor in dic2.items():
-    print(f"{chave} {valor}")
+for indice, (chave, valor) in enumerate(dic2.items()):
+    if indice>=iter:
+        print(f"{chave} {valor}")

@@ -2,19 +2,19 @@
 
 
 # Abrir o arquivo no modo de leitura
-with open('PAOA.TXT', 'r') as arquivo:
+with open('entrada.txt', 'r') as arquivo:
     linhas = arquivo.readlines()
 
 # Remover o caractere de quebra de linha ('\n') de cada linha
 linhas = [linha.strip() for linha in linhas]
 dic = {}
-print(linhas)
-for i in range(int(linhas[0]+1)):
+iter = int(linhas[0])
+linhas = linhas[1:]
+for i in range(int(iter)):
     nome,valor = linhas[i].split()
     dic[nome] = int(valor)
-itera = 0
-for linha in arquivo:
-    linha = input()
+linhas = linhas[iter:]
+for linha in linhas:
     if linha == "":
         break
     coisa, coisa2, valor = linha.split()
@@ -23,32 +23,37 @@ for linha in arquivo:
     else:
         dic[coisa] = coisa2 + '*' + valor + ','
 
-
+print(dic)
 
 
 def procurar_calcular(vetor,chave):
     if vetor is not None:
         if (not isinstance(vetor, int))and vetor!='':
             vetor = vetor.split(',')
-            
+            vetor = vetor[:-1]
+            print(vetor)
             for x in range(len(vetor)):
-                if vetor[x] != '':
-                    indice = vetor[x][0]
-                    if not isinstance(dic[indice],int):
-                        dic[indice] = procurar_calcular(dic[indice],indice)
+                
+                indice = vetor[x][0]
+                print(indice)
+                if not isinstance(dic[indice],int):
+                    dic[indice] = procurar_calcular(dic[indice],indice)
+                else:
+                    if chave in dic2:
+                        print(chave)
+                        print(dic2[chave])
+                        dic2[chave] += int(dic[indice])*int(vetor[x][2:])
                     else:
-                        if chave in dic2:
-                            dic2[chave] += int(dic[indice])*int(vetor[x][2:])
-                        else:
-                            dic2[chave] = int(dic[indice])*int(vetor[x][2:])
-                        dic[chave]=dic2[chave]
+                        dic2[chave] = int(dic[indice])*int(vetor[x][2:])
+                    dic[chave]=dic2[chave]
         elif vetor != '':
             return vetor
     
 def calculate(dic_aux):
     for indice, (chave, valor) in enumerate(dic.items()):
+        print(dic_aux[chave],chave)
         procurar_calcular(dic_aux[chave],chave)
-        print(dic_aux)
+        
 
 dic2={}
 calculate(dic)

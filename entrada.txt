@@ -1,7 +1,10 @@
-6
-PUSH 2
-PUSH 3
-PUSH 2
-MIN
-POP
-MIN
+3
+A 3
+B 4
+C 1
+D B 3
+D A 2
+E D 1
+E A 4
+F B 10
+F E 3

@@ -4,8 +4,8 @@ for i in range(n):
     nome,valor = input().split()
     dic[nome] = int(valor)
 itera = 0
-while True:
 
+while True:
     try:
         linha = input()
         if linha == "":
@@ -23,9 +23,9 @@ while True:
 
 def procurar_calcular(vetor,chave):
     if vetor is not None:
-        if (not isinstance(vetor, int))and vetor!='':
+        if (not isinstance(vetor, int)) and vetor!='':
             vetor = vetor.split(',')
-            
+            vetor.pop()
             for x in range(len(vetor)):
                 if vetor[x] != '':
                     indice = vetor[x][0]

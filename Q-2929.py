@@ -1,17 +1,18 @@
-saco = []
-size = 0
-
-Val = int(input())
- 
-for i in range(0,Val):
-    A = input().split()
-    if A[0] == "PUSH":
-        saco.append(int(A[1]))
-        size+=1
-    elif size != 0:
-        if A[0] == "MIN":
-         print(min(saco))
-        elif A[0] == "POP":
-         saco.pop(-1)
-         size-=1
-    else: print("EMPTY")
+from sys import stdin, stdout
+def main():
+  minstack = []
+  quantity = int(input())
+  for i in range(quantity):
+    comando = stdin.readline().rstrip()
+    if 'PU' in comando:
+      comando , valor= comando.split()
+      valor = int(valor)
+      minimo = valor if not minstack else min(valor, minstack[-1][1])
+      minstack.append((valor,minimo))
+    elif not minstack:
+      stdout.write("EMPTY\n")
+    elif 'M' in comando:
+      stdout.write(f"{minstack[-1][1]}\n")
+    else:
+      minstack.pop()
+main()

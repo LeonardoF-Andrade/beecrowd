@@ -1,19 +1,25 @@
 import sys
 
 def primo(val, p):
+    print(n)
     if val in p:
         return True
+    if val in n:
+        return False
     if val <= 1:
+        n.append(val)
         return False
     if val <= 3:
         p.append(val)
         return True
     if val % 2 == 0 or val % 3 == 0:
+        n.append(val)
         return False
     
     i = 5
     while i * i <= val:
         if val % i == 0 or val % (i + 2) == 0:
+            n.append(val)
             return False
         i += 6
     
@@ -76,6 +82,7 @@ def proximoprimm(A):
 
 gemeos = []
 pr = []
+n = []
 
 for i in range (0,int(input())):
     primos = []

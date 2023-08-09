@@ -1,0 +1,5 @@
+se for 10 vezes maior do q o maior pedra, fazer operaçao
+mult = total//maiorpedra
+total = total - maiorpedra*mult
+trabalhar em cima desse total achar o minimo e somar com o minimo trabalhado
+

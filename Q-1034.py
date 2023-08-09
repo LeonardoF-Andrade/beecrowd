@@ -4,10 +4,14 @@ def calcular_combinacao_minima(elementos, valor_total):
     dp = [float('inf')] * (valor_total + 1)
     dp[0] = 0
     resto = 0
-
-    if(valor_total>=2*elementos[-1]):
-        resto = valor_total//elementos[-1]-1
-        valor_total= valor_total%(elementos[-1])+elementos[-1]
+    
+    if(valor_total>=10*elementos[-1]):
+        resto = valor_total//elementos[-1]
+        valor_total= valor_total%(elementos[-1])
+        if valor_total==0:
+            return resto
+        resto = resto-10
+        valor_total+=elementos[-1]*10
     for elemento in elementos:
         for i in range(elemento, valor_total + 1):
             dp[i] = min(dp[i], dp[i - elemento] + 1)

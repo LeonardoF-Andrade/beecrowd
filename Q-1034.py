@@ -24,4 +24,5 @@ with open("saida", "w") as arquivo_saida:
         pedras = list(map(int, sys.stdin.readline().strip().split()))
         pedras.sort()
         min_elementos = calcular_combinacao_minima(pedras, tamanho)
-        print(min_elementos,file=arquivo_saida)
+        print(min_elementos)
+        print(min_elementos, file=arquivo_saida)

@@ -1,6 +1,6 @@
 casos = int(input())
 primos =[2,3,5,7,11,13]
-twin = []
+twin = set()
 def is_prime(num):
     if num in primos:
         return True
@@ -30,5 +30,15 @@ for caso in range(casos):
     for numero in range(2, ultimo + 1):
         if is_prime(numero):
             indice = primos.index(numero)
-        else:
-            print(f"{numero} não é um número primo.")
+            if primos[indice] not in twin:
+                if primos[indice]!=2:
+                    if (abs(primos[indice]-primos[indice+1]))==2:
+                        twin.add(primos[indice] )
+                        twin.add(primos[indice+1])
+                    elif (abs(primos[indice]-primos[indice-1]))==2:
+                        twin.add(primos[indice])
+                        twin.add(primos[indice - 1])
+
+
+        
+    print(len(twin))

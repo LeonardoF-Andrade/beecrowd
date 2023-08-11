@@ -1,7 +1,8 @@
 import sys
+import random
 
-def primo(val, z, w, flag = True):
-    global Aux, cont
+def primo(val, z, w, flag = True, k = 5):
+    global Aux, cont, primos
     if val in gemeos and val not in primos:
         Aux += 1
         return True
@@ -48,16 +49,14 @@ def primo(val, z, w, flag = True):
                      Aux += 1
         pr.append(val)
         return True
-    if val % 2 == 0 or val % 3 == 0:
+    if val % 2 == 0 or val % 3 == 0 :
      n.append(val)
      return False
     
-    i = 5
-    while i * i <= val:
-        if val % i == 0 or val % (i + 2) == 0:
-            n.append(val)
-            return False
-        i += 6  
+    for i in range(3, cont):
+       if val != primos[i] and val % primos[i] == 0:
+          n.append(val)
+          return False
 
     if flag == False:
        gemeos.append(val)

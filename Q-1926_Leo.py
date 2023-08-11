@@ -2,9 +2,7 @@ import sys
 
 def primo(val, z, w, flag = True):
     global Aux, cont
-    print("FFFFFF")
-    print(val, gemeos, primos, Aux)
-    if val in gemeos:
+    if val in gemeos and val not in primos:
         Aux += 1
         return True
     if val in pr:
@@ -15,34 +13,36 @@ def primo(val, z, w, flag = True):
         n.append(val)
         return False
     if val <= 3 and flag == False:
+       gemeos.append(val)
        return True
     if val <= 3 and flag:
         if val == z:
             if cont == 0:
-               print("AA")
                if val <= z or val >= w:
                 Aux += 1
                pr.append(val)
                return True
             if abs(val - proximoprimm(val)) == 2 :
                 if val not in gemeos:
-                 print("BB")
                  gemeos.append(val)
                  if val <= z or val >= w:
                   Aux += 1
+            elif abs(val - proximoprim(val)) == 2:
+                if val not in gemeos:
+                  gemeos.append(val)
+                  if val <= z or val >= w:
+                     Aux += 1
             pr.append(val)
             return True
         elif cont == 0:
          if abs(val - proximoprim(val)) == 2:
             if val not in gemeos:
-                print("CC")
                 gemeos.append(val)
                 if val <= z or val >= w:
                     Aux += 1
         elif val < z:
             if abs(val - proximoprim(val)) == 2:
                  if val not in gemeos:
-                    print("DD")
                     gemeos.append(val)
                     if val <= z or val >= w:
                      Aux += 1
@@ -59,32 +59,37 @@ def primo(val, z, w, flag = True):
             return False
         i += 6  
 
+    if flag == False:
+       gemeos.append(val)
+       return True
+
     if val == z:
         if cont == 0:
             if val <= z or val >= w:
              Aux += 1
-             print("EE")
             pr.append(val)
             return True
-        if abs(val - proximoprimm(val)) == 2 :
+        if abs(val - proximoprimm(val)) == 2:
             if val not in gemeos:
-                print("FF")
                 gemeos.append(val)
                 if val <= z or val >= w:
                  Aux += 1
+        elif abs(val - proximoprim(val)) == 2:
+         if val not in gemeos:
+            gemeos.append(val)
+            if val <= z or val >= w:
+                Aux += 1
         pr.append(val)
         return True
     elif cont == 0:
         if abs(val - proximoprim(val)) == 2:
          if val not in gemeos:
-            print("GG")
             gemeos.append(val)
             if val <= z or val >= w:
                 Aux += 1
     elif val < z:
         if abs(val - proximoprim(val)) == 2:
                 if val not in gemeos:
-                 print("HH")
                  gemeos.append(val)
                 if val <= z or val >= w:
                     Aux += 1
@@ -120,14 +125,14 @@ pr = []
 n = []
 
 
-for i in range (0,int(input())):
+for _ in range (0,int(input())):
     primos = []
     Aux = 0
     cont = 0
     X, Y = map(int, sys.stdin.readline().strip().split())
     for i in range (X, Y+1):
-        if primo(i, Y, X):
+         if primo(i, max(Y,X), min(X, Y)):
             primos.append(i)
-            cont +=1
+            cont +=1       
     print(Aux)
 

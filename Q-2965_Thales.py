@@ -7,12 +7,13 @@ mafia= (stdin.readline()).split()
 
 graph = {}
 for i in range(N-1): 
+    print(i)
     if mafia[i] not in graph:
-
         graph[mafia[i]] = [i+2]
     else:
         graph[mafia[i]].append((i + 2))
-    print(graph)
+    if str(i+2):
+        graph[str(i+2)] = []
 
 print(graph)
 visited = [] # List for visited nodes.
@@ -22,13 +23,11 @@ def bfs(visited, graph, node): #function for BFS
     visited.append(node)
     queue.append(node)
     
-    while queue:          # Creating loop to visit each node
-        m = str(queue.pop(0)) 
-        print (m) 
-       
-        for neighbour in graph[m]:
-            if neighbour not in visited:
-                visited.append(neighbour)
-                queue.append(neighbour)
+def dfs(visited, graph, node):  #function for dfs 
+    if node not in visited:
+        print (node)
+        visited.add(node)
+        for neighbour in graph[node]:
+            dfs(visited, graph, neighbour)
 
-bfs(visited, graph, '1')
+dfs(visited, graph, '1')

@@ -22,6 +22,8 @@ class Grafo:
         return self.use
     def SetUse(self):
         self.use = True
+    def GetHei(self):
+        return self.height
     
 
 def Height(list, idi):
@@ -33,6 +35,21 @@ def Height(list, idi):
     list[idi][0].Set(Max[0]+1, Max[1])
     return Max[0]
 
+def resp(lista, li):
+    global R
+
+    if lista.GetUse() == False:
+        R+=1
+        lista.SetUse()
+        if lista.descen == None:
+            return
+        
+        ind = li[0].vertices.index(lista.descen)
+        print(ind)
+        #resp(lista[lista[0].descen])
+    return
+
+
 N, K = map(int,stdin.readline().split())
 List , R = [[Grafo(i),] for i in range (0, N+1)], 0
 A = stdin.readline().split()
@@ -43,4 +60,11 @@ for x in map(lambda x : List[int(x[1])].append(x[0]),
 
 setrecursionlimit(2**31-2)
 Height(List,1)
-print(List.height[1])
+
+List = sorted(List, key=lambda x: x[0].GetHei(), reverse=True)
+
+resp(List[0][0],List)
+print(R)
+
+
+

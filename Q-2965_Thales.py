@@ -1,76 +1,74 @@
-from sys import stdin,stdout
-from collections import deque 
-N, K = input().split()
-N = int(N)
-K = int(K)
-mafia= (stdin.readline()).split()
-graph = {}
-rank = {}
-## percorrer ao contrario pelo vetor q ele ja deu e rankear, depois pegar os maiores ranks e percorrer acrescentando os nos visitados q forem ser tirados
+from sys import stdin, stdout, setrecursionlimit
+from operator import itemgetter
 
-for i in range(N-1): 
-    if int(mafia[i]) not in graph:
-        graph[int(mafia[i])] = [i+2]
-    else:
-        graph[int(mafia[i])].append((i + 2))
-    if (i+2) not in graph:
-        graph[(i+2)] = []
-
-print(graph)
-visited = [] # List for visited nodes.
-queue = []     #Initialize a queue
-rank = [1]
-def dfs(visited, graph, node, num):  #function for dfs 
-
-    if node not in visited:
-        if(node ==1):
-            rank[0] = 1
-        else:
-            rank.append(num+1)
-            
-        print (node)
-        visited.append(node)
-        for neighbour in graph[node]:
-            dfs(visited, graph, neighbour,num+1)
-
-def bfs(graph, start):
-    visited = set()
-    queue = deque([(start, 1)])  # Inicializa a fila com o nó de partida e a altura 0
-    visited.add(start)
+class Grafo:
+    def __init__(self, vertices):
+        self.vertices = int(vertices)
+        self.height = -1
+        self.descen = None
+        self.use = False
     
-    heights = [[1,1]]  # Dicionário para armazenar as alturas
+    def __repr__(self):
+        return f"Node({self.vertices}," \
+               f" H: {self.height}, " \
+               f" N: {self.descen}, " \
+               f" {self.use}) "
     
-    while queue:
-        node, height = queue.popleft()
-        
-        for neighbour in graph[node]:
-            if neighbour not in visited:
-                visited.add(neighbour)
-                queue.append((neighbour, height + 1))
-                heights.append([neighbour,height + 1])  # Armazena a altura do vizinho
-                
-    return heights  # Retorna o dicionário de alturas
+    def Set(self, height, idi):
+        self.height = height
+        self.descen = idi
+    def GetHeight(self):
+        return self.height   
+    def GetUse(self):
+        return self.use
+    def SetUse(self):
+        self.use = True
+    
 
-def pegar(k,ranked,visit): 
-    cont = 0
-    for i in range(1,k+1):
-        tirar = ranked[-i][0]
-        print(tirar)
-        indice = tirar-2
-        
-        while mafia[indice]!= '1' and mafia[indice] not in visit:
-            visit.append(mafia[indice])
-            indice = int(mafia[indice])-2
-            
-            
-            cont+=1
-            
-            print(mafia[indice]!= '1' and mafia[indice] not in visit)
-    print(visit)
-    return cont
+def Height(list, idi):
+    Path = [(0, None),]
+    for i, id in enumerate (list[idi]):
+        if i == 0: continue
+        Path.append((Height(list, id)+1, id))
+    Max = max(Path, key = itemgetter(0))
+    list[idi][0].Set(Max[0]+1, Max[1])
+    return Max[0]
+
+N, K = map(int,stdin.readline().split())
+
+List , R = [[Grafo(i),] for i in range (0, N+1)], 0
+A = stdin.readline().split()
+if K >=(N-1):
+    print(N)
+
+else:
+    for x in map(lambda x : List[int(x[1])].append(x[0]), 
+            enumerate(A, 2)):
+        pass
 
 
-visited2 = []
-rank = bfs(graph, 1)
-result = pegar(K,rank,visited2)
-print(result)
+    setrecursionlimit(2**31-2)
+    Height(List,1)
+    List = sorted(List, key=lambda x: x[0].GetHeight(), reverse=True)
+    result = 0
+    i = 1
+    element = 0
+    while i <= K:
+        atual = List[element][0]
+
+        if not atual.use:
+            while atual.descen != None:
+                atual.use = True
+                result+=1
+                atual = List[atual.descen][0]
+            atual.use = True
+            result+=1
+            i+=1
+            element+=1
+            
+        else: 
+            element+=1
+            atual = List[element]
+
+
+    print(result)

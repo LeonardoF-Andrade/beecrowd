@@ -17,7 +17,8 @@ class Grafo:
     def Set(self, height, idi):
         self.height = height
         self.descen = idi
-    
+    def GetHeight(self):
+        return self.height   
     def GetUse(self):
         return self.use
     def SetUse(self):
@@ -43,4 +44,4 @@ for x in map(lambda x : List[int(x[1])].append(x[0]),
 
 setrecursionlimit(2**31-2)
 Height(List,1)
-print(List.height[1])
+print(List)

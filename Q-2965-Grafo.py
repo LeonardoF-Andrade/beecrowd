@@ -7,18 +7,14 @@ class Grafo:
         self.height = -1
         self.descen = None
         self.use = False
-    
     def __repr__(self):
         return f"Node({self.vertices}," \
                f" H: {self.height}, " \
                f" N: {self.descen}, " \
                f" {self.use}) "
-    
     def Set(self, height, idi):
         self.height = height
-        self.descen = idi
-    def GetHeight(self):
-        return self.height   
+        self.descen = idi  
     def GetUse(self):
         return self.use
     def SetUse(self):
@@ -36,32 +32,44 @@ def Height(list, idi):
     list[idi][0].Set(Max[0]+1, Max[1])
     return Max[0]
 
-def resp(lista, li):
-    global R
+def resp(lista, li, j):
+    global R, N
 
     if lista.GetUse() == False:
         R+=1
         lista.SetUse()
         if lista.descen == None:
             return
-        
-        ind = li[0].vertices.index(lista.descen)
-        print(ind)
-        #resp(lista[lista[0].descen])
+        for i in range(j, N):
+            if li[i][0].vertices == lista.descen:
+                break
+        resp(li[i][0],li, j+i)
     return
 
 
 N, K = map(int,stdin.readline().split())
 List , R = [[Grafo(i),] for i in range (0, N+1)], 0
 A = stdin.readline().split()
-for x in map(lambda x : List[int(x[1])].append(x[0]), 
-         enumerate(A, 2)):
-    pass
+if K >=(N-1):
+    print(N)
+else:
+    for x in map(lambda x : List[int(x[1])].append(x[0]), 
+            enumerate(A, 2)):
+        pass
 
-
-setrecursionlimit(2**31-2)
-Height(List,1)
-List = sorted(List, key=lambda x: x[0].GetHei(), reverse=True)
-
-resp(List[0][0],List)
-print(R)
+    setrecursionlimit(2**31-2)
+    Height(List,1)
+    List = sorted(List, key=lambda x: x[0].GetHei(), reverse=True)
+    cont = 0
+    for i in range (N):
+    
+        if List[i][0].use == False:
+         if cont == K-1:
+          cont +=1
+          R = R + List[i][0].height 
+         else:  
+          resp(List[i][0],List,i)
+          cont += 1
+        if cont == K:
+            break
+    print(R)

@@ -1,50 +1,46 @@
+from sys import stdin, stdout, setrecursionlimit
+from operator import itemgetter
+
 class Grafo:
-    
     def __init__(self, vertices):
-        self.vertices = vertices
-        self.grafo = [[] for i in range(self.vertices)]
+        self.vertices = int(vertices)
+        self.height = -1
+        self.descen = None
+        self.use = False
     
-    def add(self, u, v):
-        self.grafo[u-1].append(v)
-
+    def __repr__(self):
+        return f"Node({self.vertices}," \
+               f" H: {self.height}, " \
+               f" N: {self.descen}, " \
+               f" {self.use}) "
     
-    def dfs(self, v): 
-        profundidades = []
-        for i in self.grafo[v-1]:
-            profundidades.extend(self.dfs(i))
-        if not profundidades:
-            return [(1, [v])]
-        max_profundidade = max(profundidades, key=lambda x: x[0])
-        print(v, profundidades, self.grafo[v-1])
-        print(max_profundidade)
-        if max_profundidade[0] == 1: 
-         return [(max_profundidade[0] + 1,  self.grafo[v-1][0])]
-        else:
-            return [(max_profundidade[0] + 1,  v)]
+    def Set(self, height, idi):
+        self.height = height
+        self.descen = idi
+    
+    def GetUse(self):
+        return self.use
+    def SetUse(self):
+        self.use = True
+    
 
-N, K = map(int,input().split())
-gra = Grafo(N)
-A = list(map(int,input().split()))
-for i in range (N-1):
-    gra.add(A[i],i+2)
+def Height(list, idi):
+    Path = [(0, None),]
+    for i, id in enumerate (list[idi]):
+        if i == 0: continue
+        Path.append((Height(list, id)+1, id))
+    Max = max(Path, key = itemgetter(0))
+    list[idi][0].Set(Max[0]+1, Max[1])
+    return Max[0]
 
-profundidades = {}
-a = [0]*(N+1)
-b = [0]*(N+1)
-for i in range (1,N+1):
-    profundidades[i] = gra.dfs(i)
+N, K = map(int,stdin.readline().split())
+List , R = [[Grafo(i),] for i in range (0, N+1)], 0
+A = stdin.readline().split()
+for x in map(lambda x : List[int(x[1])].append(x[0]), 
+         enumerate(A, 2)):
+    pass
 
-print(profundidades)
-"""
-a[1] = profundidades[1][0][1]
-b[1] = len(profundidades[1][0][1])
-for j in range(2, N + 1):
- a[j] = [x for x in profundidades[j][0][1] if x not in profundidades[1][0][1]]
- b[j] = len(a[j])
 
-b.sort(reverse=True)
-cont = sum(b[:K])
-
-print(cont)
-
-"""
+setrecursionlimit(2**31-2)
+Height(List,1)
+print(List.height[1])

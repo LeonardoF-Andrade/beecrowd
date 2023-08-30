@@ -24,17 +24,20 @@ class Grafo:
     
 
 def Height(list, idi):
+    global folha
     Path = [(0, None),]
     for i, id in enumerate (list[idi]):
         if i == 0: continue
         Path.append((Height(list, id)+1, id))
     Max = max(Path, key = itemgetter(0))
     list[idi][0].Set(Max[0]+1, Max[1])
+    if list[idi][0].descen == None:
+        folha+=1
     return Max[0]
 
 def resp(lista, li, j):
     global R, N
-
+    aux = 0
     if lista.GetUse() == False:
         R+=1
         lista.SetUse()
@@ -46,11 +49,11 @@ def resp(lista, li, j):
         resp(li[i][0],li, j+i)
     return
 
-
+folha = 0
 N, K = map(int,stdin.readline().split())
 List , R = [[Grafo(i),] for i in range (0, N+1)], 0
 A = stdin.readline().split()
-if K >=(N-1):
+if K >= (N-1):
     print(N)
 else:
     for x in map(lambda x : List[int(x[1])].append(x[0]), 
@@ -59,17 +62,20 @@ else:
 
     setrecursionlimit(2**31-2)
     Height(List,1)
-    List = sorted(List, key=lambda x: x[0].GetHei(), reverse=True)
-    cont = 0
-    for i in range (N):
-    
-        if List[i][0].use == False:
-         if cont == K-1:
-          cont +=1
-          R = R + List[i][0].height 
-         else:  
-          resp(List[i][0],List,i)
-          cont += 1
-        if cont == K:
-            break
-    print(R)
+    if folha <= K:
+        print(N)
+    else:
+        List = sorted(List, key=lambda x: x[0].GetHei(), reverse=True)
+        cont = 0
+        for i in range (N):
+        
+            if List[i][0].use == False:
+              if cont == K-1:
+                 cont +=1
+                 R = R + List[i][0].height 
+              else:  
+                resp(List[i][0],List,i)
+                cont += 1
+            if cont == K:
+                break
+        stdout.write(str(R)+"\n")

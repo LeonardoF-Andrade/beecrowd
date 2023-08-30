@@ -65,7 +65,6 @@ else:
             result+=1
             i+=1
             element+=1
-            
         else: 
             element+=1
             atual = List[element]

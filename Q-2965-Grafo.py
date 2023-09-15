@@ -21,6 +21,8 @@ class Grafo:
         self.use = True
     def GetHei(self):
         return self.height
+    def Getdes(self):
+        return self.descen
     
 
 def Height(list, idi):
@@ -28,6 +30,7 @@ def Height(list, idi):
     Path = [(0, None),]
     for i, id in enumerate (list[idi]):
         if i == 0: continue
+        print(id)
         Path.append((Height(list, id)+1, id))
     Max = max(Path, key = itemgetter(0))
     list[idi][0].Set(Max[0]+1, Max[1])
@@ -56,8 +59,11 @@ A = stdin.readline().split()
 if K >= (N-1):
     print(N)
 else:
-    for x in map(lambda x : List[int(x[1])].append(x[0]), 
-            enumerate(A, 2)):
+    for x in map(lambda x: 
+                 List[int(x[1])].append(x[0])
+                 List[int(x[0])].append(x[1]) i
+                 ,
+                 enumerate(A, 2)):
         pass
 
     setrecursionlimit(2**31-2)
@@ -66,6 +72,7 @@ else:
         print(N)
     else:
         List = sorted(List, key=lambda x: x[0].GetHei(), reverse=True)
+        print(List)
         cont = 0
         for i in range (N):
         

@@ -1,2 +1,0 @@
-
-            maiorvoto=votos

@@ -14,7 +14,7 @@ class Grafo:
                f" {self.use}) "
     def Set(self, height, idi):
         self.height = height
-        self.descen = idi  
+        self.descen = idi
     def GetUse(self):
         return self.use
     def SetUse(self):
@@ -23,7 +23,7 @@ class Grafo:
         return self.height
     def Getdes(self):
         return self.descen
-    
+
 
 def Height(list, idi):
     global folha
@@ -59,7 +59,7 @@ A = stdin.readline().split()
 if K >= (N-1):
     print(N)
 else:
-    for x in map(lambda x: 
+    for x in map(lambda x:
                  List[int(x[1])].append(x[0])
                  List[int(x[0])].append(x[1]) i
                  ,
@@ -75,12 +75,12 @@ else:
         print(List)
         cont = 0
         for i in range (N):
-        
+
             if List[i][0].use == False:
               if cont == K-1:
                  cont +=1
-                 R = R + List[i][0].height 
-              else:  
+                 R = R + List[i][0].height
+              else:
                 resp(List[i][0],List,i)
                 cont += 1
             if cont == K:

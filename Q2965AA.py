@@ -5,7 +5,6 @@ class Graph:
         self.n = n
         self.edges = [[] for _ in range(n)]
 
-
     def add_edge(self, u, v):
         self.edges[u].append(v)
 
